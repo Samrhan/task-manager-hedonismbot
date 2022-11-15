@@ -4,10 +4,10 @@ const prompt = require('prompt-sync')()
 class Controller {
 
     operators = {
-        '+': this.addTask,
-        '-': this.deleteTask,
-        'x': this.toggleTask,
-        'o': this.toggleTask,
+        '+': (description) => this.addTask(description),
+        '-': (id) => this.deleteTask(id),
+        'x': (id) => this.toggleTask(id, true),
+        'o': (id) => this.toggleTask(id, false),
     }
 
     constructor(service) {
@@ -27,14 +27,6 @@ class Controller {
         this.service.delete(id)
     }
 
-    toggleTaskDone(id) {
-        this.toggleTask(id, true);
-    }
-
-    toggleTaskUndone(id) {
-        this.toggleTask(id, false);
-    }
-
     toggleTask(id, status) {
         this.service.toggle(id, status);
     }
@@ -44,8 +36,11 @@ class Controller {
     }
 
     parseInput(input) {
-        const [operator, ...args] = this.splitInput(input);
-        this.operators[operator](...args);
+        const [operator, args] = this.splitInput(input);
+        if (this.operators[operator]) {
+            console.log(this.operators[operator]);
+            this.operators[operator](args);
+        }
     }
 
     mainLoop() {
