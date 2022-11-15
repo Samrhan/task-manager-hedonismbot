@@ -82,11 +82,27 @@ describe('Controller', function () {
     })
 
     it("should run main loop", () => {
+        mockService.getAll.mockReturnValue([]);
         jest.spyOn(controller, 'parseInput');
         jest.spyOn(controller.interactor, 'readInput').mockReturnValueOnce('x 1').mockReturnValueOnce('o 1').mockReturnValueOnce('q');
         controller.mainLoop();
         expect(controller.parseInput).toHaveBeenCalledTimes(2);
     });
 
+    it("should print message if there is no todo", ()=>{
+        mockService.getAll.mockReturnValue([]);
+        jest.spyOn(controller.interactor, 'printMessage');
+        jest.spyOn(controller.interactor, 'readInput').mockReturnValueOnce('q');
+        controller.mainLoop();
+        expect(controller.interactor.printMessage).toHaveBeenCalledWith('No task yet');
+    })
+
+    it("should print todos", ()=>{
+        mockService.getAll.mockReturnValue([{id: 1, description: 'task', done: false}]);
+        jest.spyOn(controller.interactor, 'printMessage');
+        jest.spyOn(controller.interactor, 'readInput').mockReturnValueOnce('q');
+        controller.mainLoop();
+        expect(controller.interactor.printMessage).toHaveBeenCalledWith('1 [ ] task');
+    })
 
 });
