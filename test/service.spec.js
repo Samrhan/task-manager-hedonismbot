@@ -13,6 +13,7 @@ describe("Task service", () => {
         const taskName = "task";
         service.add(taskName);
         expect(mockRepository.save).toHaveBeenCalledTimes(1);
+        expect(mockRepository.getNextId).toHaveBeenCalledTimes(1);
         expect(mockRepository.save).toHaveBeenCalledWith(new TaskEntity(1, taskName, false));
     })
 })
