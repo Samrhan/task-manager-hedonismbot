@@ -19,4 +19,10 @@ describe('Task Manager Repository', () => {
         repository.save(task);
         expect(repository.getAll()).toEqual([task]);
     });
+
+    it('should get task by id', () => {
+        const task = new TaskEntity(1, 'task', false);
+        repository.save(task);
+        expect(repository.getById(1)).toEqual(task)
+    });
 });
