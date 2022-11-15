@@ -43,5 +43,28 @@ describe('Controller', function () {
         expect(mockService.toggle).toHaveBeenCalledWith(id, status);
     });
 
+    it('should toggle task done', () => {
+        const id = 1;
+        jest.spyOn(controller, 'toggleTask');
+        controller.toggleTaskDone(id);
+        expect(controller.toggleTask).toHaveBeenCalledTimes(1);
+        expect(controller.toggleTask).toHaveBeenCalledWith(id, true);
+    });
+
+    it('should toggle task undone', () => {
+        const id = 1;
+        jest.spyOn(controller, 'toggleTask');
+        controller.toggleTaskUndone(id);
+        expect(controller.toggleTask).toHaveBeenCalledTimes(1);
+        expect(controller.toggleTask).toHaveBeenCalledWith(id, false);
+    });
+
+
+    it("should split input", ()=>{
+        const input = '+ task to do';
+        const expected = ['+', 'task to do'];
+        expect(controller.splitInput(input)).toEqual(expected);
+    })
+
 
 });
