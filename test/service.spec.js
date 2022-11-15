@@ -5,6 +5,7 @@ const mockRepository = {
     save: jest.fn(),
     getNextId: jest.fn().mockReturnValue(1),
     getAll: jest.fn(),
+    delete: jest.fn()
 }
 
 describe("Task service", () => {
@@ -27,4 +28,11 @@ describe("Task service", () => {
         expect(mockRepository.getAll).toHaveBeenCalledTimes(1);
         expect(tasks).toEqual([new TaskModel(entity)]);
     })
+
+    it("should delete task", () => {
+        const id = 1;
+        service.delete(id);
+        expect(mockRepository.delete).toHaveBeenCalledTimes(1);
+        expect(mockRepository.delete).toHaveBeenCalledWith(id);
+    });
 })
