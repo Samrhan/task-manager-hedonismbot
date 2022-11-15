@@ -10,6 +10,10 @@ class Controller {
         const task = new TaskDto(taskName);
         this.service.add(task);
     }
+
+    getTasks() {
+        return this.service.getAll();
+    }
 }
 
 module.exports = {Controller}
