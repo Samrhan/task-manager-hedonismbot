@@ -25,4 +25,13 @@ describe('Controller', function () {
         controller.getTasks();
         expect(mockService.getAll).toHaveBeenCalledTimes(1);
     });
+
+    it('should delete task', () => {
+        const id = 1;
+        controller.deleteTask(id);
+        expect(mockService.delete).toHaveBeenCalledTimes(1);
+        expect(mockService.delete).toHaveBeenCalledWith(id);
+    });
+
+
 });
