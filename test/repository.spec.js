@@ -32,4 +32,11 @@ describe('Task Manager Repository', () => {
         repository.delete(1);
         expect(repository.todos.get(1)).toBeUndefined();
     });
+
+    it('should toggle task', () => {
+        const task = new TaskEntity(1, 'task', false);
+        repository.save(task);
+        repository.toggle(1, true);
+        expect(repository.todos.get(1).done).toBeTruthy();
+    });
 });
