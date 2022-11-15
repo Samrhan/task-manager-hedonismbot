@@ -3,6 +3,7 @@ const {TaskDto} = require("../controller/dto/task.dto");
 
 const mockService = {
     add: jest.fn(),
+    getAll: jest.fn()
 }
 
 describe('Controller', function () {
@@ -19,4 +20,9 @@ describe('Controller', function () {
         expect(mockService.add).toHaveBeenCalledTimes(1);
         expect(mockService.add).toHaveBeenCalledWith(task);
     })
+
+    it('should get tasks', () => {
+        controller.getTasks();
+        expect(mockService.getAll).toHaveBeenCalledTimes(1);
+    });
 });
