@@ -25,6 +25,10 @@ class Repository {
         task.done = status;
         this.todos.set(id, task);
     }
+
+    getNextId() {
+        return this.todos.size + 1;
+    }
 }
 
 module.exports = {Repository};
