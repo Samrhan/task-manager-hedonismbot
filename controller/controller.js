@@ -11,7 +11,6 @@ class ConsoleInteractor {
 }
 
 class Controller {
-
     interactor;
     operators = {
         '+': (description) => this.addTask(description),
@@ -25,59 +24,60 @@ class Controller {
         this.interactor = new ConsoleInteractor();
     }
 
-    addTask(taskName) {
-        this.service.add(taskName);
+    async addTask(taskName) {
+        await this.service.add(taskName);
     }
 
-    getTasks() {
-        return this.service.getAll();
+    async getTasks() {
+        return await this.service.getAll();
     }
 
-    prettyPrint() {
-        const tasks = this.getTasks();
+    async prettyPrint() {
+        const tasks = await this.getTasks();
         if (tasks.length === 0) {
             return 'No task yet';
         }
-        return this.getTasks().map(task => `${task.id} [${task.done ? 'x' : ' '}] ${task.description}`).join('\n');
+        return tasks.map(task => `${task.id} [${task.done ? 'x' : ' '}] ${task.description}`).join('\n');
     }
 
-    deleteTask(id) {
+    async deleteTask(id) {
         const idNumber = parseInt(id);
         if (isNaN(idNumber)) {
             this.interactor.printMessage('Invalid id');
             return;
         }
-        this.service.delete(idNumber);
+        await this.service.delete(idNumber);
     }
 
-    toggleTask(id, status) {
+    async toggleTask(id, status) {
         const idNumber = parseInt(id);
         if (isNaN(idNumber)) {
             this.interactor.printMessage('Invalid id');
             return;
         }
-        this.service.toggle(idNumber, status);
+        await this.service.toggle(idNumber, status);
     }
 
     splitInput(input) {
         return [input.split(' ')[0], input.split(' ').slice(1).join(' ')];
     }
 
-    parseInput(input) {
+    async parseInput(input) {
         const [operator, args] = this.splitInput(input);
         if (this.operators[operator]) {
-            this.operators[operator](args);
+            await this.operators[operator](args);
         }
     }
 
-    mainLoop() {
+    async mainLoop() {
         while (true) {
-            this.interactor.printMessage(this.prettyPrint());
+            this.interactor.printMessage(await this.prettyPrint());
             const input = this.interactor.readInput();
             if (input === 'q') {
+                this.interactor.printMessage('Bye!');
                 break;
             }
-            this.parseInput(input);
+            await this.parseInput(input);
         }
     }
 }

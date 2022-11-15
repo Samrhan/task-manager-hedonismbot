@@ -6,24 +6,25 @@ class Service {
         this.repository = repository;
     }
 
-    add(taskName) {
-        const id = this.repository.getNextId();
+    async add(taskName) {
+        const id = await this.repository.getNextId()
         const task = new TaskEntity(id, taskName, false);
-        this.repository.save(task);
+        await this.repository.save(task);
     }
 
-    getAll() {
-        return this.repository.getAll().map(task => new TaskModel(task));
+    async getAll() {
+        const todos = await this.repository.getAll();
+        return todos.map(task => new TaskModel(task));
     }
 
-    delete(id) {
-        this.repository.delete(id);
+    async delete(id) {
+        await this.repository.delete(id);
     }
 
-    toggle(id, status) {
-        const task = this.repository.getById(id);
+    async toggle(id, status) {
+        const task = await this.repository.getById(id);
         task.done = status;
-        this.repository.save(task);
+        await this.repository.save(task);
     }
 }
 
