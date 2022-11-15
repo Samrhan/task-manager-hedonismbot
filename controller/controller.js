@@ -18,6 +18,10 @@ class Controller {
     deleteTask(id) {
         const task = this.service.delete(id)
     }
+
+    toggleTask(id, status) {
+        const task = this.service.toggle(id, status);
+    }
 }
 
 module.exports = {Controller}
