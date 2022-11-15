@@ -5,7 +5,8 @@ const mockRepository = {
     save: jest.fn(),
     getNextId: jest.fn().mockReturnValue(1),
     getAll: jest.fn(),
-    delete: jest.fn()
+    delete: jest.fn(),
+    getById: jest.fn()
 }
 
 describe("Task service", () => {
@@ -34,5 +35,17 @@ describe("Task service", () => {
         service.delete(id);
         expect(mockRepository.delete).toHaveBeenCalledTimes(1);
         expect(mockRepository.delete).toHaveBeenCalledWith(id);
+    });
+
+    it("should toggle task", () => {
+        const id = 1;
+        const status = true;
+        const entity = new TaskEntity(id, "task", false);
+        mockRepository.getById.mockReturnValueOnce(entity);
+        service.toggle(id, status);
+        expect(mockRepository.getById).toHaveBeenCalledTimes(1);
+        expect(mockRepository.getById).toHaveBeenCalledWith(id);
+        expect(mockRepository.save).toHaveBeenCalledTimes(1);
+        expect(mockRepository.save).toHaveBeenCalledWith(new TaskEntity(id, "task", status));
     });
 })
