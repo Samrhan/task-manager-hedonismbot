@@ -19,6 +19,12 @@ class Repository {
     delete(id) {
         this.todos.delete(id);
     }
+
+    toggle(id, status) {
+        const task = this.todos.get(id);
+        task.done = status;
+        this.todos.set(id, task);
+    }
 }
 
 module.exports = {Repository};
