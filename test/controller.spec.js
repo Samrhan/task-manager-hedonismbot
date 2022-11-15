@@ -83,5 +83,12 @@ describe('Controller', function () {
         });
     })
 
+    it("should run main loop", () => {
+        jest.spyOn(controller, 'parseInput');
+        jest.spyOn(controller.interactor, 'readInput').mockReturnValueOnce('x 1').mockReturnValueOnce('o 1').mockReturnValueOnce('q');
+        controller.mainLoop();
+        expect(controller.parseInput).toHaveBeenCalledTimes(2);
+    });
+
 
 });
