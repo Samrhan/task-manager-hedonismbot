@@ -19,6 +19,12 @@ class Service {
     delete(id) {
         this.repository.delete(id);
     }
+
+    toggle(id, status) {
+        const task = this.repository.getById(id);
+        task.done = status;
+        this.repository.save(task);
+    }
 }
 
 module.exports = {
