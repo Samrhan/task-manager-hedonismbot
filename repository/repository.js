@@ -15,6 +15,10 @@ class Repository {
     getById(id) {
         return this.todos.get(id);
     }
+
+    delete(id) {
+        this.todos.delete(id);
+    }
 }
 
 module.exports = {Repository};
