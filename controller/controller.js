@@ -1,8 +1,18 @@
-const {TaskDto} = require("./dto/task.dto");
 const prompt = require('prompt-sync')()
+
+class ConsoleInteractor {
+    readInput() {
+        return prompt('')
+    }
+
+    printMessage(message) {
+        console.log(message)
+    }
+}
 
 class Controller {
 
+    interactor;
     operators = {
         '+': (description) => this.addTask(description),
         '-': (id) => this.deleteTask(id),
@@ -12,11 +22,11 @@ class Controller {
 
     constructor(service) {
         this.service = service;
+        this.interactor = new ConsoleInteractor();
     }
 
     addTask(taskName) {
-        const task = new TaskDto(taskName);
-        this.service.add(task);
+        this.service.add(taskName);
     }
 
     getTasks() {
@@ -38,14 +48,13 @@ class Controller {
     parseInput(input) {
         const [operator, args] = this.splitInput(input);
         if (this.operators[operator]) {
-            console.log(this.operators[operator]);
             this.operators[operator](args);
         }
     }
 
     mainLoop() {
         while (true) {
-            const input = prompt('');
+            const input = this.interactor.readInput();
             if (input === 'q') {
                 break;
             }
