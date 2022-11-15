@@ -25,4 +25,11 @@ describe('Task Manager Repository', () => {
         repository.save(task);
         expect(repository.getById(1)).toEqual(task)
     });
+
+    it('should delete task', () => {
+        const task = new TaskEntity(1, 'task', false);
+        repository.save(task);
+        repository.delete(1);
+        expect(repository.todos.get(1)).toBeUndefined();
+    });
 });
