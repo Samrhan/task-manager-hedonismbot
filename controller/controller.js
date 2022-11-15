@@ -14,6 +14,10 @@ class Controller {
     getTasks() {
         return this.service.getAll();
     }
+
+    deleteTask(id) {
+        const task = this.service.delete(id)
+    }
 }
 
 module.exports = {Controller}

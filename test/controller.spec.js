@@ -3,7 +3,8 @@ const {TaskDto} = require("../controller/dto/task.dto");
 
 const mockService = {
     add: jest.fn(),
-    getAll: jest.fn()
+    getAll: jest.fn(),
+    delete: jest.fn()
 }
 
 describe('Controller', function () {
