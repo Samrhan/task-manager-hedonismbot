@@ -15,6 +15,10 @@ class Service {
     getAll() {
         return this.repository.getAll().map(task => new TaskModel(task));
     }
+
+    delete(id) {
+        this.repository.delete(id);
+    }
 }
 
 module.exports = {
