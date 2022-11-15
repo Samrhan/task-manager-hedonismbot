@@ -33,12 +33,30 @@ class Controller {
         return this.service.getAll();
     }
 
+    prettyPrint() {
+        const tasks = this.getTasks();
+        if (tasks.length === 0) {
+            return 'No task yet';
+        }
+        return this.getTasks().map(task => `${task.id} [${task.done ? 'x' : ' '}] ${task.description}`).join('\n');
+    }
+
     deleteTask(id) {
-        this.service.delete(id)
+        const idNumber = parseInt(id);
+        if (isNaN(idNumber)) {
+            this.interactor.printMessage('Invalid id');
+            return;
+        }
+        this.service.delete(idNumber);
     }
 
     toggleTask(id, status) {
-        this.service.toggle(id, status);
+        const idNumber = parseInt(id);
+        if (isNaN(idNumber)) {
+            this.interactor.printMessage('Invalid id');
+            return;
+        }
+        this.service.toggle(idNumber, status);
     }
 
     splitInput(input) {
@@ -54,6 +72,7 @@ class Controller {
 
     mainLoop() {
         while (true) {
+            this.interactor.printMessage(this.prettyPrint());
             const input = this.interactor.readInput();
             if (input === 'q') {
                 break;
