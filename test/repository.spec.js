@@ -39,4 +39,14 @@ describe('Task Manager Repository', () => {
         repository.toggle(1, true);
         expect(repository.todos.get(1).done).toBeTruthy();
     });
+
+    it('should get next id when empty', () => {
+        expect(repository.getNextId()).toEqual(1);
+    });
+
+    it('should get next id when not empty', () => {
+        const task = new TaskEntity(1, 'task', false);
+        repository.save(task);
+        expect(repository.getNextId()).toEqual(2);
+    });
 });
