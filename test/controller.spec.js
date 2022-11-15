@@ -4,7 +4,8 @@ const {TaskDto} = require("../controller/dto/task.dto");
 const mockService = {
     add: jest.fn(),
     getAll: jest.fn(),
-    delete: jest.fn()
+    delete: jest.fn(),
+    toggle: jest.fn()
 }
 
 describe('Controller', function () {
@@ -32,6 +33,14 @@ describe('Controller', function () {
         controller.deleteTask(id);
         expect(mockService.delete).toHaveBeenCalledTimes(1);
         expect(mockService.delete).toHaveBeenCalledWith(id);
+    });
+
+    it('should toggle task', () => {
+        const id = 1;
+        const status = true;
+        controller.toggleTask(id, status);
+        expect(mockService.toggle).toHaveBeenCalledTimes(1);
+        expect(mockService.toggle).toHaveBeenCalledWith(id, status);
     });
 
 
