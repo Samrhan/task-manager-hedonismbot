@@ -21,9 +21,10 @@ describe("Task service", () => {
     })
 
     it("should get all tasks", () => {
-        mockRepository.getAll.mockReturnValueOnce([new TaskEntity(1, "task", false)]);
+        const entity = new TaskEntity(1, "task", false);
+        mockRepository.getAll.mockReturnValueOnce([entity]);
         const tasks = service.getAll();
         expect(mockRepository.getAll).toHaveBeenCalledTimes(1);
-        expect(tasks).toEqual([new TaskModel(new TaskEntity(1, "task", false))]);
+        expect(tasks).toEqual([new TaskModel(entity)]);
     })
 })
