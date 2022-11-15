@@ -11,6 +11,10 @@ class Repository {
     getAll() {
         return [...this.todos.values()];
     }
+
+    getById(id) {
+        return this.todos.get(id);
+    }
 }
 
 module.exports = {Repository};
